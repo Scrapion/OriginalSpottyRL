@@ -1,0 +1,235 @@
+<?xml version="1.0" ?>
+<robot name="test" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="body_color" value="Gazebo/SkyBlue" />
+<xacro:property name="sensor_color" value="Gazebo/White" />
+<xacro:property name="motor_color" value="Gazebo/Black" />
+<xacro:property name="wheel_color" value="Gazebo/ZincYellow" />
+
+
+<gazebo>
+  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+
+    <!-- Plugin update rate in Hz -->
+    <updateRate>50</updateRate>
+
+    <!-- Name of left joint, defaults to `left_joint` -->
+    <leftJoint>left_wheel_joint</leftJoint>
+
+    <!-- Name of right joint, defaults to `right_joint` -->
+    <rightJoint>right_wheel_joint</rightJoint>
+
+    <!-- The distance from the center of one wheel to the other, in meters, defaults to 0.34 m -->
+    <wheelSeparation>0.105</wheelSeparation>
+
+    <!-- Diameter of the wheels, in meters, defaults to 0.15 m -->
+    <wheelDiameter>0.032</wheelDiameter>
+
+    <!-- Wheel acceleration, in rad/s^2, defaults to 0.0 rad/s^2 -->
+    <wheelAcceleration>1.0</wheelAcceleration>
+
+    <!-- Maximum torque which the wheels can produce, in Nm, defaults to 5 Nm -->
+    <wheelTorque>20</wheelTorque>
+
+    <!-- Topic to receive geometry_msgs/Twist message commands, defaults to `cmd_vel` -->
+    <commandTopic>cmd_vel</commandTopic>
+
+    <!-- Topic to publish nav_msgs/Odometry messages, defaults to `odom` -->
+    <odometryTopic>odom</odometryTopic>
+
+    <!-- Odometry frame, defaults to `odom` -->
+    <odometryFrame>odom</odometryFrame>
+
+    <!-- Robot frame to calculate odometry from, defaults to `base_footprint` -->
+    <robotBaseFrame>base_link</robotBaseFrame>
+
+    <!-- Odometry source, 0 for ENCODER, 1 for WORLD, defaults to WORLD -->
+    <odometrySource>1</odometrySource>
+
+    <!-- Set to true to publish transforms for the wheel links, defaults to false -->
+    <publishWheelTF>true</publishWheelTF>
+
+    <!-- Set to true to publish transforms for the odometry, defaults to true -->
+    <publishOdom>true</publishOdom>
+
+    <!-- Set to true to publish sensor_msgs/JointState on /joint_states for the wheel joints, defaults to false -->
+    <publishWheelJointState>true</publishWheelJointState>
+
+    <!-- Set to true to swap right and left wheels, defaults to true -->
+    <legacyMode>true</legacyMode>
+  </plugin>
+</gazebo>
+
+
+<gazebo reference="base_link">
+  <material>${body_color}</material>
+
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<gazebo reference="chassis_link">
+  <material>${body_color}</material>
+
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="right_motor_link">
+  <material>${motor_color}</material>
+
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="left_motor_link">
+  <material>${motor_color}</material>
+
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="right_wheel_link">
+  <material>${wheel_color}</material>
+
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="left_wheel_link">
+  <material>${wheel_color}</material>
+
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="passive_wheel_link">
+  <material>${wheel_color}</material>
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="left_ultrasonic_sensor_link">
+  <material>${sensor_color}</material>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="center_ultrasonic_sensor_link">
+  <material>${sensor_color}</material>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="right_ultrasonic_sensor_link">
+  <material>${sensor_color}</material>
+  <selfCollide>true</selfCollide>
+</gazebo>
+
+
+<gazebo reference="optical_left_ultrasonic_sensor_link">
+  <sensor type="ray" name="sonar">
+    <visualize>true</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.01</min>
+        <max>2</max>
+        <resolution>0.02</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+      <gaussianNoise>0.005</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>/sonar/left</topicName>
+      <frameName>optical_left_ultrasonic_sensor_link</frameName>
+      <fov>0.2967</fov>
+      <radiation>ultrasound</radiation>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<gazebo reference="optical_center_ultrasonic_sensor_link">
+  <sensor type="ray" name="sonar">
+    <visualize>true</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.01</min>
+        <max>2</max>
+        <resolution>0.02</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+      <gaussianNoise>0.005</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>/sonar/center</topicName>
+      <frameName>optical_center_ultrasonic_sensor_link</frameName>
+      <fov>0.2967</fov>
+      <radiation>ultrasound</radiation>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<gazebo reference="optical_right_ultrasonic_sensor_link">
+  <sensor type="ray" name="sonar">
+    <visualize>true</visualize>
+    <update_rate>50</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>10</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>1</resolution>
+          <min_angle>-0.1309</min_angle>
+          <max_angle>0.1309</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.01</min>
+        <max>2</max>
+        <resolution>0.02</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+      <gaussianNoise>0.005</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>50</updateRate>
+      <topicName>/sonar/right</topicName>
+      <frameName>optical_right_ultrasonic_sensor_link</frameName>
+      <fov>0.2967</fov>
+      <radiation>ultrasound</radiation>
+    </plugin>
+  </sensor>
+</gazebo>
+
+</robot>
