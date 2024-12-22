@@ -1,0 +1,70 @@
+spotty_controller:
+  
+  joint_states_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+
+  # FL Controllers ------------------------------------------------------------ 
+  front_left_shoulder_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_left_shoulder_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  front_left_leg_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_left_leg_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  front_left_foot_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_left_foot_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+
+  # FR Controllers ------------------------------------------------------------ 
+  front_right_shoulder_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_right_shoulder_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  front_right_leg_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_right_leg_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  front_right_foot_joint:
+      type: effort_controllers/JointPositionController
+      joint: front_right_foot_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+
+  # RR Controllers ------------------------------------------------------------ 
+  rear_right_shoulder_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_right_shoulder_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  rear_right_leg_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_right_leg_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  rear_right_foot_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_right_foot_joint
+      pid: {p: 9, i: 0, d: 0.3055, i_clamp_min:  -1000, i_clamp_max: 1000}
+
+  # RL Controllers ------------------------------------------------------------     
+  rear_left_shoulder_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_left_shoulder_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  rear_left_leg_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_left_leg_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        
+  rear_left_foot_joint:
+      type: effort_controllers/JointPositionController
+      joint: rear_left_foot_joint
+      pid: {p: 180, i: 0.20, d: 0.9}
+        

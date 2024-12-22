@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+	<node pkg="spotty_sim_controller" type="robot_controller_gazebo.py" name="robot_controller" output="screen">
+	</node>
+
+</launch>

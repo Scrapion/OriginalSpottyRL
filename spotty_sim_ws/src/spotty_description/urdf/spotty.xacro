@@ -1,0 +1,681 @@
+<?xml version="1.0" ?>
+<robot name="spotty" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find spotty_description)/urdf/spotty.gazebo" />
+<xacro:include filename="$(find spotty_description)/urdf/spotty.trans" />
+<xacro:include filename="$(find spotty_description)/urdf/materials.xacro" />
+
+<!-- LINK -->
+
+<link name="base_odom">
+</link>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.00020902261971693134 4.8225601862200574e-05 -0.0006015050067879294" rpy="0 0 0"/>
+    <mass value="0.30443631870726445"/>
+    <inertia ixx="0.00045" iyy="0.004962" izz="0.005184" ixy="1e-06" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.26 0.11 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_cover_link">
+  <inertial>
+    <origin xyz="-0.09198458121707576 0.004987805533090641 0.020957654451882843" rpy="0 0 0"/>
+    <mass value="1.0538029561695712"/>
+    <inertia ixx="0.002059" iyy="0.015193" izz="0.016308" ixy="-2e-06" iyz="-0.0" ixz="0.001007"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15875 0.005 0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0.048 0.005 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.05825 0.11 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_cover_link">
+  <inertial>
+    <origin xyz="0.09959773739649241 0.005000384322942722 -0.01911040508583787" rpy="0 0 0"/>
+    <mass value="0.9732444797625318"/>
+    <inertia ixx="0.001903" iyy="0.013413" izz="0.014369" ixy="0.0" iyz="-0.0" ixz="0.001117"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.15875 0.005 0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.041 0.005 0.0" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.045 0.11 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="sensor_face_support_link">
+  <inertial>
+    <origin xyz="-0.005993554814395119 0.04323106909652843 -0.013058844893903814" rpy="0 0 0"/>
+    <mass value="0.3305972363247997"/>
+    <inertia ixx="0.000237" iyy="0.000112" izz="0.000172" ixy="-1e-06" iyz="0.0" ixz="-3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.211664 0.043 -0.011242" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/sensor_face_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.211664 0.043 -0.011242" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/sensor_face_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="left_ultrasonic_sensor_link">
+  <inertial>
+    <origin xyz="-0.014350229112798818 0.002773024008515635 -0.007757241323093005" rpy="0 0 0"/>
+    <mass value="0.02528835836886261"/>
+    <inertia ixx="4e-06" iyy="5e-06" izz="2e-06" ixy="-0.0" iyz="0.0" ixz="-1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.21967 -0.024294 -0.007824" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/left_ultrasonic_sensor_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+</link>
+
+<link name="optical_left_ultrasonic_sensor_link">
+</link>
+
+<link name="right_ultrasonic_sensor_link">
+  <inertial>
+    <origin xyz="-0.014350225456665422 -0.002773224813590037 -0.007757233246436109" rpy="0 0 0"/>
+    <mass value="0.02528835836886261"/>
+    <inertia ixx="4e-06" iyy="5e-06" izz="2e-06" ixy="0.0" iyz="-0.0" ixz="-1e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.21967 0.024293 -0.007824" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/right_ultrasonic_sensor_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+</link>
+
+<link name="optical_right_ultrasonic_sensor_link">
+</link>
+
+<link name="camera_link">
+  <inertial>
+    <origin xyz="-0.004164947240767131 4.025455251841104e-07 0.0004522747634588414" rpy="0 0 0"/>
+    <mass value="0.009136932367336871"/>
+    <inertia ixx="1e-06" iyy="0.0" izz="0.0" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.200732 -0.0 -0.001456" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/camera_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+</link>
+
+<link name="optical_camera_link">
+</link>
+
+<link name="front_right_shoulder_link">
+  <inertial>
+    <origin xyz="-0.0016542984907777225 -0.005584932654453888 -0.009932281115677361" rpy="0 0 0"/>
+    <mass value="0.43602933994498916"/>
+    <inertia ixx="0.00015" iyy="0.000179" izz="0.000118" ixy="2e-06" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15325 0.039 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_right_shoulder_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.0025 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.044 0.037 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_right_leg_link">
+  <inertial>
+    <origin xyz="0.0015680354138068453 -0.03506934487717556 -0.04006022180366868" rpy="0 0 0"/>
+    <mass value="1.0511050419548709"/>
+    <inertia ixx="0.001611" iyy="0.00147" izz="0.000386" ixy="-1e-06" iyz="-4.8e-05" ixz="0.000102"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15255 0.063 0.001" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_right_leg_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 -0.036 -0.032" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.037 0.1106"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_right_foot_link">
+  <inertial>
+    <origin xyz="0.0008748479427208578 -0.0023372298260112 -0.03292840735657025" rpy="0 0 0"/>
+    <mass value="0.6331144023537385"/>
+    <inertia ixx="0.001076" iyy="0.001052" izz="0.000118" ixy="-2e-06" iyz="2.3e-05" ixz="3.3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.18255 0.10065 0.10775" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_right_foot_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0483" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.030 0.020 0.117"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_right_toe_link">
+  <inertial>
+    <origin xyz="-0.004155509486183956 -6.401456177085318e-07 -0.004154421861264912" rpy="0 0 0"/>
+    <mass value="0.06493004425254276"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="8e-06" ixy="0.0" iyz="0.0" ixz="3e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.180183 0.10135 0.228368" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_right_toe_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0015" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_left_shoulder_link">
+  <inertial>
+    <origin xyz="-0.0016543357277108706 0.005585743301051223 -0.009932185985287317" rpy="0 0 0"/>
+    <mass value="0.4360328404223618"/>
+    <inertia ixx="0.00015" iyy="0.000179" izz="0.000118" ixy="-2e-06" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15325 -0.039 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_left_shoulder_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0025 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.044 0.037 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_left_leg_link">
+  <inertial>
+    <origin xyz="0.0015680290766370564 0.0350702109049426 -0.04006021617647847" rpy="0 0 0"/>
+    <mass value="1.0511049613338161"/>
+    <inertia ixx="0.001611" iyy="0.00147" izz="0.000386" ixy="1e-06" iyz="4.8e-05" ixz="0.000102"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.15255 -0.063 0.001" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_left_leg_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0.036 -0.032" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.037 0.1106"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_left_foot_link">
+  <inertial>
+    <origin xyz="0.000874850369267377 0.002338122491525832 -0.03292840591679373" rpy="0 0 0"/>
+    <mass value="0.6331144723952644"/>
+    <inertia ixx="0.001076" iyy="0.001052" izz="0.000118" ixy="2e-06" iyz="-2.3e-05" ixz="3.3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.18255 -0.10065 0.10775" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_left_foot_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0483" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.030 0.020 0.117"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="front_left_toe_link">
+  <inertial>
+    <origin xyz="-0.004151625883102583 -3.299655052663164e-07 -0.004152267667033915" rpy="0 0 0"/>
+    <mass value="0.06495623656223376"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="8e-06" ixy="0.0" iyz="0.0" ixz="3e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.180183 -0.10135 0.228368" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/front_left_toe_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0015" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_right_shoulder_link">
+  <inertial>
+    <origin xyz="0.001655228054530028 -0.005584895121144434 -0.009932187078876574" rpy="0 0 0"/>
+    <mass value="0.4360327621893695"/>
+    <inertia ixx="0.00015" iyy="0.000179" izz="0.000118" ixy="-2e-06" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.15325 0.039 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_right_shoulder_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.0025 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.044 0.037 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_right_leg_link">
+  <inertial>
+    <origin xyz="0.0015680060786525396 -0.0350693459690756 -0.04006021884086707" rpy="0 0 0"/>
+    <mass value="1.0511050020771726"/>
+    <inertia ixx="0.001611" iyy="0.00147" izz="0.000386" ixy="-1e-06" iyz="-4.8e-05" ixz="0.000102"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.15255 0.063 0.001" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_right_leg_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 -0.036 -0.032" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.037 0.1106"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_right_foot_link">
+  <inertial>
+    <origin xyz="0.0008748002650984243 -0.002337223287890322 -0.03292840413244362" rpy="0 0 0"/>
+    <mass value="0.6331144008783258"/>
+    <inertia ixx="0.001076" iyy="0.001052" izz="0.000118" ixy="-2e-06" iyz="2.3e-05" ixz="3.3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.12255 0.10065 0.10775" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_right_foot_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0483" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.030 0.020 0.117"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_right_toe_link">
+  <inertial>
+    <origin xyz="-0.004155509486179071 -6.401456167509645e-07 -0.004154421861266355" rpy="0 0 0"/>
+    <mass value="0.06493004425254276"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="8e-06" ixy="0.0" iyz="0.0" ixz="3e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.124917 0.10135 0.228368" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_right_toe_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0015" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_left_shoulder_link">
+  <inertial>
+    <origin xyz="0.0016552203181348368 0.00558575064050066 -0.009932202448579973" rpy="0 0 0"/>
+    <mass value="0.4360324350506454"/>
+    <inertia ixx="0.00015" iyy="0.000179" izz="0.000118" ixy="2e-06" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.15325 -0.039 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_left_shoulder_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0025 -0.009" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.044 0.037 0.07"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_left_leg_link">
+  <inertial>
+    <origin xyz="0.0015680033756574618 0.035070211824869704 -0.04006021677732277" rpy="0 0 0"/>
+    <mass value="1.051104923474581"/>
+    <inertia ixx="0.001611" iyy="0.00147" izz="0.000386" ixy="1e-06" iyz="4.8e-05" ixz="0.000102"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.15255 -0.063 0.001" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_left_leg_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0.036 -0.032" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.03 0.037 0.1106"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_left_foot_link">
+  <inertial>
+    <origin xyz="0.0008748023829627805 0.0023381229587267904 -0.03292840970392229" rpy="0 0 0"/>
+    <mass value="0.6331141886569122"/>
+    <inertia ixx="0.001076" iyy="0.001052" izz="0.000118" ixy="2e-06" iyz="-2.3e-05" ixz="3.3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.12255 -0.10065 0.10775" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_left_foot_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0483" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.030 0.020 0.117"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="rear_left_toe_link">
+  <inertial>
+    <origin xyz="-0.00414838524007291 1.3894420968774135e-06 -0.004147769272270424" rpy="0 0 0"/>
+    <mass value="0.06498166475741922"/>
+    <inertia ixx="8e-06" iyy="8e-06" izz="8e-06" ixy="-0.0" iyz="-0.0" ixz="3e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.124917 -0.10135 0.228368" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://spotty_description/meshes/rear_left_toe_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 0.0 -0.0015" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="0.015"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- JOINT -->
+
+<joint name="body_joint" type="fixed">
+  <parent link="base_odom"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 0.2"/>
+</joint>
+
+<joint name="front_cover_joint" type="fixed">
+  <parent link="base_odom"/>
+  <child link="front_cover_link"/>
+  <origin xyz="0.15875 -0.005 0.2" rpy="0 0 0"/>
+</joint>
+
+<joint name="rear_cover_joint" type="fixed">
+  <parent link="base_odom"/>
+  <child link="rear_cover_link"/>
+  <origin xyz="-0.15875 -0.005 0.2" rpy="0 0 0"/>
+</joint>
+
+<joint name="front_support_sensors_joint" type="fixed">
+  <parent link="front_cover_link"/>
+  <child link="sensor_face_support_link"/>
+  <origin xyz="0.052914 -0.038 0.011242" rpy="0 0 0"/>
+</joint>
+
+<joint name="left_ultrasonic_sensor_joint" type="fixed">
+  <parent link="sensor_face_support_link"/>
+  <child link="left_ultrasonic_sensor_link"/>
+  <origin xyz="0.008006 0.067294 -0.003418" rpy="0 0 0"/>
+</joint>
+
+<joint name="optical_left_ultrasonic_sensor_joint" type="fixed">
+  <parent link="left_ultrasonic_sensor_link"/>
+  <child link="optical_left_ultrasonic_sensor_link"/>
+  <origin xyz="0.01 0.0 -0.01" rpy="0 0.174533 -0.261799"/>
+</joint>
+
+<joint name="right_ultrasonic_sensor_joint" type="fixed">
+  <parent link="sensor_face_support_link"/>
+  <child link="right_ultrasonic_sensor_link"/>
+  <origin xyz="0.008006 0.018707 -0.003418" rpy="0 0 0"/>
+</joint>
+
+<joint name="optical_right_ultrasonic_sensor_joint" type="fixed">
+  <parent link="right_ultrasonic_sensor_link"/>
+  <child link="optical_right_ultrasonic_sensor_link"/>
+  <origin xyz="0.01 0.0 -0.01" rpy="0 0.174533 0.261799"/>
+</joint>
+
+<joint name="camera_joint" type="fixed">
+  <parent link="sensor_face_support_link"/>
+  <child link="camera_link"/>
+  <origin xyz="-0.010932 0.043 -0.009786" rpy="0 0 0"/>
+</joint>
+
+<joint name="optical_camera_joint" type="fixed">
+  <parent link="camera_link"/>
+  <child link="optical_camera_link"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
+<joint name="front_right_shoulder_joint" type="revolute">
+  <origin xyz="0.15325 -0.039 0.009" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="front_right_shoulder_link"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.610865" lower="-0.610865" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_right_leg_joint" type="revolute">
+  <origin xyz="-0.0007 -0.024 -0.01" rpy="0 0 0"/>
+  <parent link="front_right_shoulder_link"/>
+  <child link="front_right_leg_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="2.094395" lower="-1.047198" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_right_foot_joint" type="revolute">
+  <origin xyz="0.03 -0.03765 -0.10675" rpy="0 0 0"/>
+  <parent link="front_right_leg_link"/>
+  <child link="front_right_foot_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="0.0" lower="-3.141593" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_right_toe_joint" type="fixed">
+  <origin xyz="-0.002367 -0.0007 -0.120618" rpy="0 0 0"/>
+  <parent link="front_right_foot_link"/>
+  <child link="front_right_toe_link"/>
+</joint>
+
+<joint name="front_left_shoulder_joint" type="revolute">
+  <origin xyz="0.15325 0.039 0.009" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="front_left_shoulder_link"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.610865" lower="-0.610865" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_left_leg_joint" type="revolute">
+  <origin xyz="-0.0007 0.024 -0.01" rpy="0 0 0"/>
+  <parent link="front_left_shoulder_link"/>
+  <child link="front_left_leg_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="2.094395" lower="-1.047198" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_left_foot_joint" type="revolute">
+  <origin xyz="0.03 0.03765 -0.10675" rpy="0 0 0"/>
+  <parent link="front_left_leg_link"/>
+  <child link="front_left_foot_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="0.0" lower="-3.141593" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="front_left_toe_joint" type="fixed">
+  <origin xyz="-0.002367 0.0007 -0.120618" rpy="0 0 0"/>
+  <parent link="front_left_foot_link"/>
+  <child link="front_left_toe_link"/>
+</joint>
+
+<joint name="rear_right_shoulder_joint" type="revolute">
+  <origin xyz="-0.15325 -0.039 0.009" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="rear_right_shoulder_link"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.610865" lower="-0.610865" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_right_leg_joint" type="revolute">
+  <origin xyz="0.0007 -0.024 -0.01" rpy="0 0 0"/>
+  <parent link="rear_right_shoulder_link"/>
+  <child link="rear_right_leg_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="2.094395" lower="-1.047198" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_right_foot_joint" type="revolute">
+  <origin xyz="0.03 -0.03765 -0.10675" rpy="0 0 0"/>
+  <parent link="rear_right_leg_link"/>
+  <child link="rear_right_foot_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="0.0" lower="-3.141593" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_right_toe_joint" type="fixed">
+  <origin xyz="-0.002367 -0.0007 -0.120618" rpy="0 0 0"/>
+  <parent link="rear_right_foot_link"/>
+  <child link="rear_right_toe_link"/>
+</joint>
+
+<joint name="rear_left_shoulder_joint" type="revolute">
+  <origin xyz="-0.15325 0.039 0.009" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="rear_left_shoulder_link"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.610865" lower="-0.610865" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_left_leg_joint" type="revolute">
+  <origin xyz="0.0007 0.024 -0.01" rpy="0 0 0"/>
+  <parent link="rear_left_shoulder_link"/>
+  <child link="rear_left_leg_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="2.094395" lower="-1.047198" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_left_foot_joint" type="revolute">
+  <origin xyz="0.03 0.03765 -0.10675" rpy="0 0 0"/>
+  <parent link="rear_left_leg_link"/>
+  <child link="rear_left_foot_link"/>
+  <axis xyz="0.0 1.0 0.0"/>
+  <limit upper="0.0" lower="-3.141593" effort="1000.0" velocity="0.7"/>
+  <dynamics damping="0.0" friction="0.5"/>
+</joint>
+
+<joint name="rear_left_toe_joint" type="fixed">
+  <origin xyz="-0.002367 0.0007 -0.120618" rpy="0 0 0"/>
+  <parent link="rear_left_foot_link"/>
+  <child link="rear_left_toe_link"/>
+</joint>
+
+</robot>

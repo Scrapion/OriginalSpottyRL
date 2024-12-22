@@ -1,0 +1,253 @@
+<?xml version="1.0" ?>
+<robot name="spotty" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="white" value="Gazebo/White" />
+<xacro:property name="blue" value="Gazebo/Blue" />
+<xacro:property name="black" value="Gazebo/Black" />
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+  <robotNamespace>spotty_controller</robotNamespace>
+  
+  <odometryTopic>odom</odometryTopic>
+  <odometryFrame>odom</odometryFrame>
+  <robotBaseFrame>base_odom</robotBaseFrame>
+  <odometrySource>1</odometrySource>
+  <publishOdom>true</publishOdom>
+  
+  </plugin>
+</gazebo>
+
+<gazebo reference="base_link">
+  <material>${white}</material>
+  <gravity>true</gravity>
+  <sensor name="imu_sensor" type="imu">
+  	<always_on>true</always_on>
+  	<update_rate>100</update_rate>
+  	<visualize>true</visualize>
+  	<topic>__default_topic__</topic>
+  	<plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+  		<topicName>spotty_imu/base_link_orientation</topicName>
+  		<bodyName>imu_link</bodyName>
+  		<updateRateHZ>15.0</updateRateHZ>
+  		<gaussianNoise>0.0</gaussianNoise>
+  		<xyzOffset>0 0 0</xyzOffset>
+  		<rpyOffset>0 0 0</rpyOffset>
+  		<frameName>base_link</frameName>
+  		<initialOrientationAsReference>false</initialOrientationAsReference>
+  	</plugin>
+  	<pose>0 0 0 0 0 0</pose>
+  </sensor>
+</gazebo>
+
+<gazebo>
+	<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+		<robotNamespace>spotty_gazebo</robotNamespace>
+		<jointName> front_right_shoulder_joint, front_right_leg_joint, front_right_foot_joint, front_left_shoulder_joint, front_left_leg_joint, front_left_foot_joint, rear_right_shoulder_joint, rear_right_leg_joint, rear_right_foot_joint, rear_left_shoulder_joint, rear_left_leg_joint, rear_left_foot_joint</jointName>
+		<updateRate>100</updateRate>
+	</plugin>
+</gazebo>
+
+<gazebo reference="front_cover_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="rear_cover_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="front_left_shoulder_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="front_left_leg_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="front_left_foot_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="front_left_toe_link">
+  <material>${black}</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <minDepth>0.0002</minDepth>
+  <kp value="1000000.0"/>
+  <kd value="100.0"/>
+</gazebo>
+
+<gazebo reference="front_right_shoulder_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="front_right_leg_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="front_right_foot_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="front_right_toe_link">
+  <material>${black}</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <minDepth>0.0002</minDepth>
+  <kp value="1000000.0"/>
+  <kd value="100.0"/>
+</gazebo>
+
+<gazebo reference="rear_left_shoulder_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="rear_left_leg_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="rear_left_foot_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="rear_left_toe_link">
+  <material>${black}</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <minDepth>0.0002</minDepth>
+  <kp value="1000000.0"/>
+  <kd value="100.0"/>
+</gazebo>
+
+<gazebo reference="rear_right_shoulder_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="rear_right_leg_link">
+  <material>${blue}</material>
+</gazebo>
+
+<gazebo reference="rear_right_foot_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="rear_right_toe_link">
+  <material>${black}</material>
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <minDepth>0.0002</minDepth>
+  <kp value="1000000.0"/>
+  <kd value="100.0"/>
+</gazebo>
+
+<gazebo reference="sensor_face_support_link">
+  <material>${white}</material>
+</gazebo>
+
+<gazebo reference="left_ultrasonic_sensor_link">
+  <material>${black}</material>
+</gazebo>
+
+<gazebo reference="right_ultrasonic_sensor_link">
+  <material>${black}</material>
+</gazebo>
+
+<gazebo reference="camera_link">
+  <material>${black}</material>
+  <sensor name="camera" type="camera">
+  	<pose> 0 0 0 0 0 0 </pose>
+  	<visualize>true</visualize>
+  	<update_rate>10</update_rate>
+  	<camera>
+  		<horizontal_fov>1.089</horizontal_fov>
+  		<image>
+  			<format>R8G8B8</format>
+  			<width>640</width>
+  			<height>480</height>
+		</image>
+		<clip>
+			<near>0.05</near>
+			<far>8.0</far>
+		</clip>
+	</camera>
+	<plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+		<frame_name>optical_camera_link</frame_name>
+	</plugin>
+</sensor>
+</gazebo>
+
+<gazebo reference="optical_left_ultrasonic_sensor_link">
+  <sensor type="ray" name="sonar">
+    <visualize>true</visualize>
+    <update_rate>100</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>100</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.5</min_angle>
+          <max_angle>0.5</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.5</min_angle>
+          <max_angle>0.5</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.01</min>
+        <max>2.0</max>
+        <resolution>0.02</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+      <gaussianNoise>0.005</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100</updateRate>
+      <topicName>/sonar/left</topicName>
+      <frameName>optical_left_ultrasonic_sensor_link</frameName>
+      <fov>1.0</fov>
+      <radiation>ultrasound</radiation>
+    </plugin>
+  </sensor>
+</gazebo>
+
+<gazebo reference="optical_right_ultrasonic_sensor_link">
+  <sensor type="ray" name="sonar">
+    <visualize>true</visualize>
+    <update_rate>100</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>100</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.5</min_angle>
+          <max_angle>0.5</max_angle>
+        </horizontal>
+        <vertical>
+          <samples>10</samples>
+          <resolution>1.0</resolution>
+          <min_angle>-0.5</min_angle>
+          <max_angle>0.5</max_angle>
+        </vertical>
+      </scan>
+      <range>
+        <min>0.01</min>
+        <max>2.0</max>
+        <resolution>0.02</resolution>
+      </range>
+    </ray>
+    <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_range">
+      <gaussianNoise>0.005</gaussianNoise>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100</updateRate>
+      <topicName>/sonar/right</topicName>
+      <frameName>optical_right_ultrasonic_sensor_link</frameName>
+      <fov>1.0</fov>
+      <radiation>ultrasound</radiation>
+    </plugin>
+  </sensor>
+</gazebo>
+
+</robot>

@@ -1,0 +1,7 @@
+<launch>
+  <arg name="model" default="$(find spotty_description)/urdf/spotty.xacro"/>
+  <arg name="gui" default="true"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+  <param name="use_gui" value="$(arg gui)"/>
+  <node name="rviz" pkg="rviz" args="-d $(find spotty_description)/launch/spotty.rviz" type="rviz" required="true"/>
+</launch>

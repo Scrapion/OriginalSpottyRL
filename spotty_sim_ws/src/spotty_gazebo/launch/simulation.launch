@@ -1,0 +1,32 @@
+<launch>
+
+    <!-- Empty World -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find spotty_gazebo)/launch/world/normal.world"/>
+      <arg name="use_sim_time" value="false"/>
+      <arg name="paused" value="false"/>
+      <arg name="gui" value="true"/>
+      <arg name="headless" value="false"/>
+      <arg name="debug" value="false"/>
+    </include>
+
+    <!-- Robot -->
+    <arg name="robot" default="$(find spotty_description)/urdf/spotty.xacro"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot)" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 0.27 -model spotty_gazebo"/>
+
+    <!-- Controllers -->
+    <rosparam file="$(find spotty_gazebo)/config/controllers.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen" ns="spotty_controller"
+          args="front_right_shoulder_joint front_right_leg_joint front_right_foot_joint
+                front_left_shoulder_joint front_left_leg_joint front_left_foot_joint
+                rear_right_shoulder_joint rear_right_leg_joint rear_right_foot_joint
+                rear_left_shoulder_joint rear_left_leg_joint rear_left_foot_joint"/>
+
+    <!-- Robot State Publisher -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/spotty_gazebo/joint_states" />
+      <param name="publish_frequency" type="double" value="10" />
+    </node>
+  
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+
+    <!-- Gazebo Simulation -->
+    <include file="$(find spotty_gazebo)/launch/simulation.launch" />
+
+    <!-- Robot Controller -->
+    <include file="$(find spotty_sim_controller)/launch/robot_controller.launch"/>
+    
+    <include file="$(find spotty_description)/launch/show_model.launch" /> 
+
+</launch>
