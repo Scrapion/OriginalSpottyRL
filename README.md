@@ -9,6 +9,7 @@ Gli ambienti sono strutturati come spazi di lavoro catkin in un ambiente ROS Noe
 
 È possibile utilizzare il sistema di compilazione ROS Catkin make, ma è preferibile utilizzare catkin tools. I comandi di compilazione riportati di seguito saranno forniti assumendo catkin tools.
 
+I due workspace devono essere directory separate all'interno del sistema.
 
 
 ## Installazione
@@ -57,4 +58,42 @@ source devel/setup.bash
 roslaunch test_description display.launch
 ```
 
+##Lancio simulazione Spotty
+Dopo aver scaricato la repo ed aver estratto il contenuto su Home (non obbligatorio ma preferibile), Apri la directory spotty_sim_ws nel terminale e lancia i seguenti comandi:
+```
+cd spotty_sim_ws
 
+catkin build
+
+source devel/setup.bash
+
+roslaunch spotty run_spotty_gazebo.launch
+```
+
+Lanciati questi comandi verranno avviati sia gazebo che rviz.
+
+Se su gazebo il robot si è ribaltato usa CTRL+R per resettare il mondo, questo permette al robot di andare nella giusta posizione.
+
+PS:
+Se hai problemi con il comando 
+```
+catkin build
+```
+lancia il seguente comando nel terminale:
+```
+rm -rf .catkin_tools
+```
+
+Se hai qualche dubbio scrivimi e vediamo come risolvere.
+Ti lascio anche dei link a delle repo che ti possono essere utili:
+* Questa è la repository su cui si basa la simulazione di spotty. Sono state fatte alcune modifiche, ma sostanzialmente puoi vedere il codice che sta scritto qui se vuoi aggiungere qualcosa:
+
+      - https://github.com/lnotspotl/notspot_sim_py/tree/main
+
+* Questa è una repository molto interessante. Utilizza Pybullet per la simulazione e algoritmi di rl per permettere al robot di camminare su diversi tipi di terreno. Dacci un'occhiata forse tu riesci a capirci qualcosa più di me su quella parte:
+
+      - https://github.com/OpenQuadruped/spot_mini_mini/tree/spot
+
+Se non riesci a lavorare bene con gazebo possiamo provare a passare a Pybullet.
+
+Ora goditi le vacanze di Natale.
