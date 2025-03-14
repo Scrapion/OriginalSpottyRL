@@ -1,99 +1,69 @@
 # Gazebo-Simulation
-In questa repo ci sono le simulazioni per robot fatte utilizzando Gazebo 
 
-# Panoramica
+In this repository, you will find robot simulations created using Gazebo.
 
-In questa repository, sto caricando i modelli URDF dei robot e le loro simulazioni realizzate con Gazebo.
+## Overview
 
-Gli ambienti sono strutturati come spazi di lavoro catkin in un ambiente ROS Noetic su Ubuntu 20.04. Il software potrebbe non funzionare o non essere compilato al di fuori di questo ambiente.
+In this repository, I am uploading the URDF models of the robots along with their Gazebo simulations.
 
-È possibile utilizzare il sistema di compilazione ROS Catkin make, ma è preferibile utilizzare catkin tools. I comandi di compilazione riportati di seguito saranno forniti assumendo catkin tools.
+The environments are structured as catkin workspaces within a ROS Noetic environment on Ubuntu 20.04. The software might not work or compile outside of this setup.
 
-I due workspace devono essere directory separate all'interno del sistema.
+While you can use the ROS Catkin make build system, it is preferable to use catkin tools. The build commands provided below assume you are using catkin tools.
+
+The two workspaces must be in separate directories on your system.
+
+## Installation
+
+You can install ROS Noetic by following the instructions at:
+
+[https://wiki.ros.org/noetic/Installation/Ubuntu](https://wiki.ros.org/noetic/Installation/Ubuntu)
+
+During the installation of ROS, it is recommended to install the following packages:
+
+`sudo apt-get install ros-noetic-joy sudo apt-get install ros-noetic-rplidar-ros sudo apt-get install ros-noetic-hector-slam sudo apt-get install ros-noetic-teleop-twist-keyboard`
+
+For catkin tools, use these commands:
+
+`sudo apt-get install python3-catkin-tools sudo apt-get install python3-catkin-pkg python3-catkin-pkg-modules`
+
+## Launching the Car Simulation
+
+After downloading the repository and extracting the content to your Home directory (not mandatory, but preferred), open the `sorcio_2_ws` directory in the terminal and run the following commands:
+
+`catkin build  source devel/setup.bash  roslaunch test_description gazebo.launch`
+
+If you want to control the car via the keyboard, open another terminal and run:
+
+`rosrun teleop_twist_keyboard teleop_twist_keyboard.py`
+
+If you want a "better" view of what is happening around the robot (in terms of sensor data), open yet another terminal and run:
+
+`cd sorcio_2_ws  source devel/setup.bash  roslaunch test_description display.launch`
+
+## Launching the Spotty Simulation
+
+After downloading the repository and extracting the content to your Home directory (again, not mandatory but preferred), open the `spotty_sim_ws` directory in the terminal and execute the following commands:
 
 
-## Installazione
+`cd spotty_sim_ws  catkin build  source devel/setup.bash  roslaunch spotty run_spotty_gazebo.launch`
 
-Puoi installare Ros Noetic tramite le istruzioni a questo link:
+Executing these commands will start both Gazebo and RViz.
 
-https://wiki.ros.org/noetic/Installation/Ubuntu
+If the robot has flipped over in Gazebo, press **CTRL+R** to reset the world. This will reposition the robot correctly.
 
-Durante l'installazione di ROS è consigliabile installare i seguenti packages: 
-```
-sudo apt-get install ros-noetic-joy
-sudo apt-get install ros-noetic-rplidar-ros
-sudo apt-get install ros-noetic-hector-slam
-sudo apt-get install ros-noetic-teleop-twist-keyboard
-```
+**PS:**  
+If you encounter issues with the `catkin build` command, run the following in the terminal:
 
-Per quanto riguarda catkin tools utilizza questi comandi:
 
-```
-sudo apt-get install python3-catkin-tools
-sudo apt-get install python3-catkin-pkg python3-catkin-pkg-modules
-```
+`rm -rf .catkin_tools`
 
-## Lancio della macchinina
-Dopo aver scaricato la repo ed aver estratto il contenuto su Home (non obbligatorio ma preferibile), 
-Apri la directory sorcio_2_ws nel terminale e lancia i seguenti comandi:
-```
-catkin build
+If you have any questions, feel free to contact me and we'll work through them together.
 
-source devel/setup.bash
+Here are some links to repositories that might be useful:
 
-roslaunch test_description gazebo.launch
-```
+- This repository is the basis for the Spotty simulation. Some modifications have been made, but essentially you can review the code here if you want to add something:  
+    [lnotspotl/notspot_sim_py](https://github.com/lnotspotl/notspot_sim_py/tree/main)
+- This is a very interesting repository that uses Pybullet for simulation and RL algorithms to enable the robot to walk on various types of terrain. Take a look—maybe you can understand it better than I do:  
+    [OpenQuadruped/spot_mini_mini](https://github.com/OpenQuadruped/spot_mini_mini/tree/spot)
 
-Se vuoi provare a controllare la macchinina tramite la tastiera, su un altro terminale lancia il seguente comando:
-```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
-
-Se vuoi avere anche una visione "migliore" di ciò che sta succedendo attorno al robot (riguardo alla sensoristica), lancia anche questo comando in un altro terminale:
-```
-cd sorcio_2_ws
-
-source devel/setup.bash
-
-roslaunch test_description display.launch
-```
-
-##Lancio simulazione Spotty
-Dopo aver scaricato la repo ed aver estratto il contenuto su Home (non obbligatorio ma preferibile), Apri la directory spotty_sim_ws nel terminale e lancia i seguenti comandi:
-```
-cd spotty_sim_ws
-
-catkin build
-
-source devel/setup.bash
-
-roslaunch spotty run_spotty_gazebo.launch
-```
-
-Lanciati questi comandi verranno avviati sia gazebo che rviz.
-
-Se su gazebo il robot si è ribaltato usa CTRL+R per resettare il mondo, questo permette al robot di andare nella giusta posizione.
-
-PS:
-Se hai problemi con il comando 
-```
-catkin build
-```
-lancia il seguente comando nel terminale:
-```
-rm -rf .catkin_tools
-```
-
-Se hai qualche dubbio scrivimi e vediamo come risolvere.
-Ti lascio anche dei link a delle repo che ti possono essere utili:
-* Questa è la repository su cui si basa la simulazione di spotty. Sono state fatte alcune modifiche, ma sostanzialmente puoi vedere il codice che sta scritto qui se vuoi aggiungere qualcosa:
-
-      - https://github.com/lnotspotl/notspot_sim_py/tree/main
-
-* Questa è una repository molto interessante. Utilizza Pybullet per la simulazione e algoritmi di rl per permettere al robot di camminare su diversi tipi di terreno. Dacci un'occhiata forse tu riesci a capirci qualcosa più di me su quella parte:
-
-      - https://github.com/OpenQuadruped/spot_mini_mini/tree/spot
-
-Se non riesci a lavorare bene con gazebo possiamo provare a passare a Pybullet.
-
-Ora goditi le vacanze di Natale.
+If you have trouble working with Gazebo, we can try switching to Pybullet.
